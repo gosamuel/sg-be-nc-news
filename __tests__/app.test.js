@@ -23,10 +23,13 @@ describe("GET api/topics", () => {
       .get("/api/topics")
       .expect(200)
       .then((res) => {
-        expect(res.body.topics[0]).toHaveProperty(
-          "description",
-          "The man, the Mitch, the legend"
+        res.body.topics.forEach(
+          (topic) => expect(topic).toHaveProperty("description"),
+          (topic) => expect(topic).toHaveProperty("slug")
         );
       });
+  });
+  it("throws error if given path that doesn't exist", () => {
+    return request(app).get("/api/nonsense").expect(404);
   });
 });
