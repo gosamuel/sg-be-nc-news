@@ -7,7 +7,7 @@ const testData = require("../db/data/test-data");
 beforeEach(() => seed(testData));
 
 afterAll(() => {
-  connection.end();
+  return connection.end();
 });
 describe("GET api/topics", () => {
   it("responds with array containing all topics", () => {
@@ -29,9 +29,6 @@ describe("GET api/topics", () => {
         );
       });
   });
-  it("throws error if given path that doesn't exist", () => {
-    return request(app).get("/api/nonsense").expect(404);
-  });
 });
 
 describe("GET api/", () => {
@@ -42,5 +39,37 @@ describe("GET api/", () => {
       .then((res) => {
         expect(typeof res).toBe("object");
       });
+  });
+});
+
+describe("GET /api/article/:article_id", () => {
+  it("should return article object", () => {
+    return request(app)
+      .get("/api/article/3")
+      .expect(200)
+      .then((res) => {
+        expect(typeof res.body).toBe("object");
+      });
+  });
+  it("should return the correct article", () => {
+    return request(app)
+      .get("/api/article/3")
+      .expect(200)
+      .then((res) => {
+        expect(res.body.article.article_id).toBe(3);
+      });
+  });
+  it("should have correct number of properties", () => {
+    return request(app)
+      .get("/api/article/2")
+      .expect(200)
+      .then((res) => {
+        expect(Object.keys(res.body.article).length).toBe(8);
+      });
+  });
+});
+describe("GET /api/nonsense", () => {
+  it("throws error if given path that doesn't exist", () => {
+    return request(app).get("/api/nonsense").expect(404);
   });
 });

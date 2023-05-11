@@ -21,8 +21,9 @@ exports.sendEndpoints = (req, res, next) => {
 };
 
 exports.sendArticleById = (req, res, next) => {
-  getArticleById()
-    .then((article) => res.status(200).send({ article }))
+  const { article_id } = req.params;
+  getArticleById(article_id)
+    .then((result) => res.status(200).send({ article: result }))
     .catch((error) => {
       next(error);
     });
