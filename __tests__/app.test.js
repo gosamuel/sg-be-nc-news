@@ -3,6 +3,7 @@ const connection = require("../db/connection.js");
 const request = require("supertest");
 const seed = require("../db/seeds/seed.js");
 const testData = require("../db/data/test-data");
+const sorted = require("jest-sorted");
 
 beforeEach(() => seed(testData));
 
@@ -101,22 +102,21 @@ describe("GET /api/articles", () => {
       .get("/api/articles")
       .expect(200)
       .then((res) => {
-        res.body.result.forEach((article, index) => {
-          if (index < res.body.result.length - 1) {
-            expect(
-              article.created_at > res.body.result[index + 1].created_at
-            ).toBe(true);
-          }
-        });
+        expect(res.body.result).toBeSorted({ descending: true });
       });
   });
-  it("should have seven properties on each object", () => {
+  it("should have all properties correct", () => {
     return request(app)
       .get("/api/articles")
       .expect(200)
       .then((res) => {
-        res.body.result.forEach((article) =>
-          expect(Object.keys(article).length).toBe(7)
+        res.body.result.forEach(
+          ((article) => expect(article).toHaveProperty("article_id"),
+          (article) => expect(article).toHaveProperty("title"),
+          (article) => expect(article).toHaveProperty("topic"),
+          (article) => expect(article).toHaveProperty("author"),
+          (article) => expect(article).toHaveProperty("created_at"),
+          (article) => expect(article).toHaveProperty("article_img_url"))
         );
       });
   });
