@@ -108,7 +108,7 @@ describe("GET /api/articles", () => {
       .get("/api/articles")
       .expect(200)
       .then((res) => {
-        expect(res.body.result).toBeSorted({ descending: true });
+        expect(res.body.result).toBeSorted("created_at", { descending: true });
       });
   });
   it("should have all properties correct", () => {
