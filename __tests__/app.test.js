@@ -85,4 +85,10 @@ describe("GET /api/articles", () => {
         );
       });
   });
+  // it("should return an array of objects", () => {
+  //   return request(app)
+  //     .get("/api/articles")
+  //     .expect(200)
+  //     .then((res) => {
+  //     }
 });
