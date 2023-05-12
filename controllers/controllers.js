@@ -4,7 +4,7 @@ const {
   getArticleById,
   getArticles,
   getArticleComments,
-} = require("../models/topics.models");
+} = require("../models/models");
 
 exports.sendTopics = (req, res, next) => {
   getAllTopics()
@@ -40,8 +40,9 @@ exports.sendArticles = (req, res, next) => {
 };
 
 exports.sendArticleComments = (req, res, next) => {
-  getArticleComments()
-    .then((result) => res.status(200).send({ result }))
+  const { articleId } = req.params;
+  getArticleComments(articleId)
+    .then((result) => res.status(200).send({ article: result }))
     .catch((error) => {
       next(error);
     });

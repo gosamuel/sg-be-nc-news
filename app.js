@@ -5,7 +5,7 @@ const {
   sendEndpoints,
   sendArticles,
   sendArticleComments,
-} = require("./controllers/topics.controllers");
+} = require("./controllers/controllers");
 
 const app = express();
 
