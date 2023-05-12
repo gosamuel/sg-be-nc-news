@@ -27,3 +27,12 @@ exports.getArticles = () => {
     )
     .then((result) => result.rows);
 };
+
+exports.getArticleComments = (articleId) => {
+  return db
+    .query(
+      `SELECT comments FROM articles WHERE article_id = $1 ORDER BY created_at DESC`,
+      [articleId]
+    )
+    .then((result) => result.rows);
+};

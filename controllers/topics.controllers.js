@@ -3,6 +3,7 @@ const {
   getEndpoints,
   getArticleById,
   getArticles,
+  getArticleComments,
 } = require("../models/topics.models");
 
 exports.sendTopics = (req, res, next) => {
@@ -32,6 +33,14 @@ exports.sendArticleById = (req, res, next) => {
 
 exports.sendArticles = (req, res, next) => {
   getArticles()
+    .then((result) => res.status(200).send({ result }))
+    .catch((error) => {
+      next(error);
+    });
+};
+
+exports.sendArticleComments = (req, res, next) => {
+  getArticleComments()
     .then((result) => res.status(200).send({ result }))
     .catch((error) => {
       next(error);

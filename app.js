@@ -4,6 +4,7 @@ const {
   sendArticleById,
   sendEndpoints,
   sendArticles,
+  sendArticleComments,
 } = require("./controllers/topics.controllers");
 
 const app = express();
@@ -15,6 +16,8 @@ app.get("/api/topics", sendTopics);
 app.get("/api/article/:article_id", sendArticleById);
 
 app.get("/api/articles", sendArticles);
+
+app.get("/api/articles/:article_id/comments", sendArticleComments);
 
 app.use((err, req, res, next) => {
   console.log(err);
