@@ -1,20 +1,10 @@
-<<<<<<< HEAD
-=======
-
->>>>>>> 6e96cfc4d76b85967b12071b945d012d2a731ec9
 const {
   getAllTopics,
   getEndpoints,
   getArticleById,
-<<<<<<< HEAD
   getArticles,
 } = require("../models/topics.models");
 
-=======
-} = require("../models/topics.models");
-
-
->>>>>>> 6e96cfc4d76b85967b12071b945d012d2a731ec9
 exports.sendTopics = (req, res, next) => {
   getAllTopics()
     .then((topics) => res.status(200).send({ topics }))
@@ -23,10 +13,6 @@ exports.sendTopics = (req, res, next) => {
     });
 };
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 6e96cfc4d76b85967b12071b945d012d2a731ec9
 exports.sendEndpoints = (req, res, next) => {
   getEndpoints()
     .then((endpoints) => res.status(200).send({ endpoints }))
@@ -44,7 +30,6 @@ exports.sendArticleById = (req, res, next) => {
     });
 };
 
-<<<<<<< HEAD
 exports.sendArticles = (req, res, next) => {
   getArticles()
     .then((result) => res.status(200).send({ result }))
@@ -52,5 +37,3 @@ exports.sendArticles = (req, res, next) => {
       next(error);
     });
 };
-=======
->>>>>>> 6e96cfc4d76b85967b12071b945d012d2a731ec9

@@ -7,13 +7,7 @@ const testData = require("../db/data/test-data");
 beforeEach(() => seed(testData));
 
 afterAll(() => {
-<<<<<<< HEAD
-  return connection.end();
-=======
-
   connection.end();
-
->>>>>>> 6e96cfc4d76b85967b12071b945d012d2a731ec9
 });
 describe("GET api/topics", () => {
   it("responds with array containing all topics", () => {
@@ -35,10 +29,6 @@ describe("GET api/topics", () => {
         );
       });
   });
-<<<<<<< HEAD
-=======
-
->>>>>>> 6e96cfc4d76b85967b12071b945d012d2a731ec9
 });
 
 describe("GET api/", () => {
@@ -79,15 +69,10 @@ describe("GET /api/article/:article_id", () => {
   });
 });
 describe("GET /api/nonsense", () => {
-<<<<<<< HEAD
-=======
-
->>>>>>> 6e96cfc4d76b85967b12071b945d012d2a731ec9
   it("throws error if given path that doesn't exist", () => {
     return request(app).get("/api/nonsense").expect(404);
   });
 });
-<<<<<<< HEAD
 
 describe("GET /api/articles", () => {
   it("should return articles without body property", () => {
@@ -107,5 +92,3 @@ describe("GET /api/articles", () => {
   //     .then((res) => {
   //     }
 });
-=======
->>>>>>> 6e96cfc4d76b85967b12071b945d012d2a731ec9
