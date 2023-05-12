@@ -85,10 +85,47 @@ describe("GET /api/articles", () => {
         );
       });
   });
-  // it("should return an array of objects", () => {
-  //   return request(app)
-  //     .get("/api/articles")
-  //     .expect(200)
-  //     .then((res) => {
-  //     }
+  it("should return an array of objects", () => {
+    return request(app)
+      .get("/api/articles")
+      .expect(200)
+      .then((res) => {
+        expect(Array.isArray(res.body.result)).toBe(true);
+        res.body.result.forEach((article) =>
+          expect(typeof article).toBe("object")
+        );
+      });
+  });
+  it("should return articles in desc date order", () => {
+    return request(app)
+      .get("/api/articles")
+      .expect(200)
+      .then((res) => {
+        res.body.result.forEach((article, index) => {
+          if (index < res.body.result.length - 1) {
+            expect(
+              article.created_at > res.body.result[index + 1].created_at
+            ).toBe(true);
+          }
+        });
+      });
+  });
+  it("should have seven properties on each object", () => {
+    return request(app)
+      .get("/api/articles")
+      .expect(200)
+      .then((res) => {
+        res.body.result.forEach((article) =>
+          expect(Object.keys(article).length).toBe(7)
+        );
+      });
+  });
+  it("should contain every object in database", () => {
+    return request(app)
+      .get("/api/articles")
+      .expect(200)
+      .then((res) => {
+        expect(res.body.result.length).toBe(12);
+      });
+  });
 });
