@@ -3,6 +3,7 @@ const connection = require("../db/connection.js");
 const request = require("supertest");
 const seed = require("../db/seeds/seed.js");
 const testData = require("../db/data/test-data");
+const sorted = require("jest-sorted");
 
 beforeEach(() => seed(testData));
 
@@ -59,12 +60,18 @@ describe("GET /api/article/:article_id", () => {
         expect(res.body.article.article_id).toBe(3);
       });
   });
-  it("should have correct number of properties", () => {
+  it("should have correct properties", () => {
     return request(app)
       .get("/api/article/2")
       .expect(200)
       .then((res) => {
-        expect(Object.keys(res.body.article).length).toBe(8);
+        expect(res.body.article).toHaveProperty("article_id");
+        expect(res.body.article).toHaveProperty("title");
+        expect(res.body.article).toHaveProperty("topic");
+        expect(res.body.article).toHaveProperty("author");
+        expect(res.body.article).toHaveProperty("body");
+        expect(res.body.article).toHaveProperty("created_at");
+        expect(res.body.article).toHaveProperty("article_img_url");
       });
   });
 });
@@ -85,10 +92,46 @@ describe("GET /api/articles", () => {
         );
       });
   });
-  // it("should return an array of objects", () => {
-  //   return request(app)
-  //     .get("/api/articles")
-  //     .expect(200)
-  //     .then((res) => {
-  //     }
+  it("should return an array of objects", () => {
+    return request(app)
+      .get("/api/articles")
+      .expect(200)
+      .then((res) => {
+        expect(Array.isArray(res.body.result)).toBe(true);
+        res.body.result.forEach((article) =>
+          expect(typeof article).toBe("object")
+        );
+      });
+  });
+  it("should return articles in desc date order", () => {
+    return request(app)
+      .get("/api/articles")
+      .expect(200)
+      .then((res) => {
+        expect(res.body.result).toBeSorted("created_at", { descending: true });
+      });
+  });
+  it("should have all properties correct", () => {
+    return request(app)
+      .get("/api/articles")
+      .expect(200)
+      .then((res) => {
+        res.body.result.forEach((article) => {
+          expect(article).toHaveProperty("article_id");
+          expect(article).toHaveProperty("title");
+          expect(article).toHaveProperty("topic");
+          expect(article).toHaveProperty("author");
+          expect(article).toHaveProperty("created_at");
+          expect(article).toHaveProperty("article_img_url");
+        });
+      });
+  });
+  it("should contain every object in database", () => {
+    return request(app)
+      .get("/api/articles")
+      .expect(200)
+      .then((res) => {
+        expect(res.body.result.length).toBe(12);
+      });
+  });
 });
