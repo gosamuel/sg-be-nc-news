@@ -40,8 +40,8 @@ exports.sendArticles = (req, res, next) => {
 };
 
 exports.sendArticleComments = (req, res, next) => {
-  const { articleId } = req.params;
-  getArticleComments(articleId)
+  const { article_id } = req.params;
+  getArticleComments(article_id)
     .then((result) => res.status(200).send({ article: result }))
     .catch((error) => {
       next(error);
