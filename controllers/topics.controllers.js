@@ -1,8 +1,10 @@
+
 const {
   getAllTopics,
   getEndpoints,
   getArticleById,
 } = require("../models/topics.models");
+
 
 exports.sendTopics = (req, res, next) => {
   getAllTopics()
@@ -11,6 +13,7 @@ exports.sendTopics = (req, res, next) => {
       next(error);
     });
 };
+
 
 exports.sendEndpoints = (req, res, next) => {
   getEndpoints()
@@ -28,3 +31,4 @@ exports.sendArticleById = (req, res, next) => {
       next(error);
     });
 };
+

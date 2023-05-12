@@ -1,4 +1,5 @@
 const express = require("express");
+
 const {
   sendTopics,
   sendArticleById,
@@ -12,6 +13,8 @@ app.get("/api", sendEndpoints);
 app.get("/api/topics", sendTopics);
 
 app.get("/api/article/:article_id", sendArticleById);
+
+
 
 app.use((err, req, res, next) => {
   console.log(err);

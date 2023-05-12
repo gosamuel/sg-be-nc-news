@@ -1,6 +1,7 @@
 const db = require("../db/connection");
 const fs = require("fs/promises");
 
+
 exports.getAllTopics = () => {
   return db.query(`SELECT * FROM topics`).then((result) => result.rows);
 };
@@ -17,3 +18,4 @@ exports.getArticleById = (articleId) => {
     .query(`SELECT * FROM articles WHERE article_id = $1`, [articleId])
     .then((result) => result.rows[0]);
 };
+
