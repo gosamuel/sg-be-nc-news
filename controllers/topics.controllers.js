@@ -1,10 +1,9 @@
-
 const {
   getAllTopics,
   getEndpoints,
   getArticleById,
+  getArticles,
 } = require("../models/topics.models");
-
 
 exports.sendTopics = (req, res, next) => {
   getAllTopics()
@@ -13,7 +12,6 @@ exports.sendTopics = (req, res, next) => {
       next(error);
     });
 };
-
 
 exports.sendEndpoints = (req, res, next) => {
   getEndpoints()
@@ -32,3 +30,10 @@ exports.sendArticleById = (req, res, next) => {
     });
 };
 
+exports.sendArticles = (req, res, next) => {
+  getArticles()
+    .then((result) => res.status(200).send({ result }))
+    .catch((error) => {
+      next(error);
+    });
+};

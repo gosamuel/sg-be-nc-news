@@ -7,9 +7,7 @@ const testData = require("../db/data/test-data");
 beforeEach(() => seed(testData));
 
 afterAll(() => {
-
   connection.end();
-
 });
 describe("GET api/topics", () => {
   it("responds with array containing all topics", () => {
@@ -31,7 +29,6 @@ describe("GET api/topics", () => {
         );
       });
   });
-
 });
 
 describe("GET api/", () => {
@@ -72,8 +69,26 @@ describe("GET /api/article/:article_id", () => {
   });
 });
 describe("GET /api/nonsense", () => {
-
   it("throws error if given path that doesn't exist", () => {
     return request(app).get("/api/nonsense").expect(404);
   });
+});
+
+describe("GET /api/articles", () => {
+  it("should return articles without body property", () => {
+    return request(app)
+      .get("/api/articles")
+      .expect(200)
+      .then((res) => {
+        res.body.result.forEach((article) =>
+          expect(article).not.toHaveProperty("body")
+        );
+      });
+  });
+  // it("should return an array of objects", () => {
+  //   return request(app)
+  //     .get("/api/articles")
+  //     .expect(200)
+  //     .then((res) => {
+  //     }
 });
