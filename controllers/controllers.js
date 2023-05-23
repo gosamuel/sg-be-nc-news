@@ -4,6 +4,7 @@ const {
   getArticleById,
   getArticles,
   getArticleComments,
+  insertComment,
 } = require("../models/models");
 
 exports.sendTopics = (req, res, next) => {
@@ -43,6 +44,16 @@ exports.sendArticleComments = (req, res, next) => {
   const { article_id } = req.params;
   getArticleComments(article_id)
     .then((result) => res.status(200).send({ article: result }))
+    .catch((error) => {
+      next(error);
+    });
+};
+
+exports.addComment = (req, res, next) => {
+  const { article_id } = req.params;
+  const { username, body } = req.body;
+  insertComment(username, body, article_id)
+    .then((comment) => res.status(201).send({ comment }))
     .catch((error) => {
       next(error);
     });

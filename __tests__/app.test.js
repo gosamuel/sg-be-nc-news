@@ -135,3 +135,108 @@ describe("GET /api/articles", () => {
       });
   });
 });
+
+describe("GET /api/articles/:article_id/comments", () => {
+  it("should retrieve the comments for a specific article ID", () => {
+    const expectedComments = [
+      {
+        body: "Oh, I've got compassion running out of my nose, pal! I'm the Sultan of Sentiment!",
+        votes: 16,
+        author: "butter_bridge",
+        article_id: 9,
+      },
+      {
+        body: "The owls are not what they seem.",
+        votes: 20,
+        author: "icellusedkars",
+        article_id: 9,
+      },
+    ];
+
+    return request(app)
+      .get(`/api/articles/9/comments`)
+      .then((response) => {
+        expect(response.status).toBe(200);
+        expect(
+          response.body.article.map((comment) => ({
+            body: comment.body,
+            votes: comment.votes,
+            author: comment.author,
+            article_id: comment.article_id,
+          }))
+        ).toEqual(expectedComments);
+      });
+  });
+
+  it("should return an empty array if there are no comments for the specified article ID", () => {
+    return request(app)
+      .get(`/api/articles/2/comments`)
+      .then((response) => {
+        expect(response.status).toBe(200);
+        expect(response.body.article).toEqual([]);
+      });
+  });
+});
+
+describe("POST /api/articles/:article_id/comments", () => {
+  it("it should add comment to correct article", () => {
+    const newComment = {
+      username: "icellusedkars",
+      body: "this is a new comment",
+    };
+
+    return request(app)
+      .post("/api/articles/9/comments")
+      .send(newComment)
+      .then((response) => {
+        expect(response.body.comment.comment_id).toBe(19);
+        expect(response.body.comment.body).toBe("this is a new comment");
+        expect(response.body.comment.article_id).toBe(9);
+        expect(response.body.comment.author).toBe("icellusedkars");
+        expect(response.body.comment.votes).toBe(0);
+        expect(typeof response.body.comment.created_at).toBe("string");
+      });
+  });
+  it("should ignore unnecessary properties", () => {
+    const newComment = {
+      username: "icellusedkars",
+      body: "this is a new comment",
+      test: "sam",
+    };
+    return request(app)
+      .post("/api/articles/9/comments")
+      .send(newComment)
+      .then((response) => {
+        expect(response.body.comment.test).toBe(undefined);
+      });
+  });
+  it("should return status 400 invalid id when required", () => {
+    const newComment = {
+      username: "icellusedkars",
+      body: "this is a new comment",
+    };
+    return request(app)
+      .post("/api/articles/not_an_id/comments")
+      .send(newComment)
+      .then((response) => {
+        expect(response.body).toEqual({ msg: "Bad Request" });
+      });
+  });
+  // it("should return 404 for nonexistant id", () => {
+  //   const newComment = {
+  //     username: "icellusedkars",
+  //     body: "this is a new comment",
+  //   };
+  //   return request(app)
+  //     .post("/api/articles/not_an_id/comments")
+  //     .send(newComment)
+  //     .then((response) => {
+  //       console.log(response);
+  //       expect(response.body).toEqual({ msg: "non existant" });
+  //     });
+  // });
+});
+
+/* 
+    no body needs custom error handling- model thrown error
+*/

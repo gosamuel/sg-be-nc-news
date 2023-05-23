@@ -1,3 +1,4 @@
+const { log } = require("console");
 const db = require("../db/connection");
 const fs = require("fs/promises");
 
@@ -31,8 +32,17 @@ exports.getArticles = () => {
 exports.getArticleComments = (articleId) => {
   return db
     .query(
-      `SELECT comments FROM articles WHERE article_id = $1 ORDER BY created_at DESC`,
+      `SELECT * FROM comments WHERE article_id = $1 ORDER BY created_at DESC`,
       [articleId]
     )
     .then((result) => result.rows);
+};
+
+exports.insertComment = (username, body, article_id) => {
+  return db
+    .query(
+      `INSERT INTO comments (body, author, article_id) VALUES ($1, $2, $3) RETURNING *;`,
+      [body, username, article_id]
+    )
+    .then(({ rows }) => rows[0]);
 };
