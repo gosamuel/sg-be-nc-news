@@ -240,3 +240,15 @@ describe("POST /api/articles/:article_id/comments", () => {
 /* 
     no body needs custom error handling- model thrown error
 */
+
+describe("PATCH /api/articles/:article_id", () => {
+  it("should change the article's vote property by the given amount", () => {
+    const vote = { inc_vote: 1 };
+    return request(app)
+      .patch("/api/articles/1")
+      .send(vote)
+      .then((response) => {
+        expect(response.body.rows[0].votes).toEqual(101);
+      });
+  });
+});

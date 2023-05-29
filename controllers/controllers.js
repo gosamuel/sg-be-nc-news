@@ -5,6 +5,7 @@ const {
   getArticles,
   getArticleComments,
   insertComment,
+  handleVote,
 } = require("../models/models");
 
 exports.sendTopics = (req, res, next) => {
@@ -54,6 +55,16 @@ exports.addComment = (req, res, next) => {
   const { username, body } = req.body;
   insertComment(username, body, article_id)
     .then((comment) => res.status(201).send({ comment }))
+    .catch((error) => {
+      next(error);
+    });
+};
+
+exports.patchVote = (req, res, next) => {
+  const { article_id } = req.params;
+  const { inc_vote } = req.body;
+  handleVote(article_id, inc_vote)
+    .then((vote) => res.status(201).send(vote))
     .catch((error) => {
       next(error);
     });

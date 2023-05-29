@@ -46,3 +46,13 @@ exports.insertComment = (username, body, article_id) => {
     )
     .then(({ rows }) => rows[0]);
 };
+
+exports.handleVote = (article_id, vote) => {
+  return db.query(
+    `UPDATE articles
+    SET
+    votes = votes + ${vote}
+    WHERE article_id = ${article_id}
+    RETURNING *;`
+  );
+};
