@@ -6,6 +6,7 @@ const {
   getArticleComments,
   insertComment,
   handleVote,
+  handleDelete,
 } = require("../models/models");
 
 exports.sendTopics = (req, res, next) => {
@@ -65,6 +66,15 @@ exports.patchVote = (req, res, next) => {
   const { inc_vote } = req.body;
   handleVote(article_id, inc_vote)
     .then((vote) => res.status(201).send(vote))
+    .catch((error) => {
+      next(error);
+    });
+};
+
+exports.deleteComment = (req, res, next) => {
+  const { comment_id } = req.params;
+  handleDelete(comment_id)
+    .then((comment) => res.status(204).send(comment))
     .catch((error) => {
       next(error);
     });

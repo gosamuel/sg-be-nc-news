@@ -252,3 +252,14 @@ describe("PATCH /api/articles/:article_id", () => {
       });
   });
 });
+
+describe("DELETE /api/comments/:comment_id", () => {
+  it("should delete the given comment", () => {
+    return request(app)
+      .delete("/api/comments/1")
+      .then((response) => {
+        expect(response.status).toBe(204);
+        expect(response.body).toEqual({});
+      });
+  });
+});

@@ -56,3 +56,11 @@ exports.handleVote = (article_id, vote) => {
     RETURNING *;`
   );
 };
+
+exports.handleDelete = (comment_id) => {
+  return db.query(
+    `DELETE FROM comments
+    WHERE comment_id = ${comment_id}
+    RETURNING *;`
+  );
+};
