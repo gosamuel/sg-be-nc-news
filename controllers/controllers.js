@@ -7,6 +7,7 @@ const {
   insertComment,
   handleVote,
   handleDelete,
+  getUsers,
 } = require("../models/models");
 
 exports.sendTopics = (req, res, next) => {
@@ -75,6 +76,17 @@ exports.deleteComment = (req, res, next) => {
   const { comment_id } = req.params;
   handleDelete(comment_id)
     .then((comment) => res.status(204).send(comment))
+    .catch((error) => {
+      next(error);
+    });
+};
+
+exports.sendUsers = (req, res, next) => {
+  getUsers()
+    .then((users) => {
+      console.log(users);
+      res.status(200).send({ users });
+    })
     .catch((error) => {
       next(error);
     });

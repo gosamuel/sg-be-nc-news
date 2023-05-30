@@ -64,3 +64,10 @@ exports.handleDelete = (comment_id) => {
     RETURNING *;`
   );
 };
+
+exports.getUsers = () => {
+  return db.query(
+    `SELECT username name avatar_url FROM users
+    RETURNING *;`
+  );
+};

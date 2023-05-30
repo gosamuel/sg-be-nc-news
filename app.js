@@ -8,6 +8,7 @@ const {
   addComment,
   patchVote,
   deleteComment,
+  sendUsers,
 } = require("./controllers/controllers");
 const cors = require("cors");
 
@@ -19,7 +20,7 @@ app.get("/api", sendEndpoints);
 
 app.get("/api/topics", sendTopics);
 
-app.get("/api/article/:article_id", sendArticleById);
+app.get("/api/articles/:article_id", sendArticleById);
 
 app.get("/api/articles", sendArticles);
 
@@ -32,6 +33,8 @@ app.post("/api/articles/:article_id/comments", addComment);
 app.patch("/api/articles/:article_id", patchVote);
 
 app.delete("/api/comments/:comment_id", deleteComment);
+
+app.get("/api/users", sendUsers);
 
 app.use((err, req, res, next) => {
   if (err.code === "22P02") {

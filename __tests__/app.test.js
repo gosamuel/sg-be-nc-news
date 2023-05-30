@@ -43,10 +43,10 @@ describe("GET api/", () => {
   });
 });
 
-describe("GET /api/article/:article_id", () => {
+describe("GET /api/articles/:article_id", () => {
   it("should return article object", () => {
     return request(app)
-      .get("/api/article/3")
+      .get("/api/articles/3")
       .expect(200)
       .then((res) => {
         expect(typeof res.body).toBe("object");
@@ -54,7 +54,7 @@ describe("GET /api/article/:article_id", () => {
   });
   it("should return the correct article", () => {
     return request(app)
-      .get("/api/article/3")
+      .get("/api/articles/3")
       .expect(200)
       .then((res) => {
         expect(res.body.article.article_id).toBe(3);
@@ -62,7 +62,7 @@ describe("GET /api/article/:article_id", () => {
   });
   it("should have correct properties", () => {
     return request(app)
-      .get("/api/article/2")
+      .get("/api/articles/2")
       .expect(200)
       .then((res) => {
         expect(res.body.article).toHaveProperty("article_id");
@@ -263,3 +263,38 @@ describe("DELETE /api/comments/:comment_id", () => {
       });
   });
 });
+
+// describe("GET /api/users", () => {
+//   it("should return users", () => {
+//     return request(app)
+//       .get("/api/users")
+//       .then((response) => {
+//         expect(response.body).toEqual([
+//           {
+//             username: "butter_bridge",
+//             name: "jonny",
+//             avatar_url:
+//               "https://www.healthytherapies.com/wp-content/uploads/2016/06/Lime3.jpg",
+//           },
+//           {
+//             username: "icellusedkars",
+//             name: "sam",
+//             avatar_url:
+//               "https://avatars2.githubusercontent.com/u/24604688?s=460&v=4",
+//           },
+//           {
+//             username: "rogersop",
+//             name: "paul",
+//             avatar_url:
+//               "https://avatars2.githubusercontent.com/u/24394918?s=400&v=4",
+//           },
+//           {
+//             username: "lurker",
+//             name: "do_nothing",
+//             avatar_url:
+//               "https://www.golenbock.com/wp-content/uploads/2015/01/placeholder-user.png",
+//           },
+//         ]);
+//       });
+//   });
+// });
