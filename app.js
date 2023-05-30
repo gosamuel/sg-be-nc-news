@@ -9,8 +9,11 @@ const {
   patchVote,
   deleteComment,
 } = require("./controllers/controllers");
+const cors = require("cors");
 
 const app = express();
+
+app.use(cors());
 
 app.get("/api", sendEndpoints);
 
