@@ -243,7 +243,7 @@ describe("POST /api/articles/:article_id/comments", () => {
 
 describe("PATCH /api/articles/:article_id", () => {
   it("should change the article's vote property by the given amount", () => {
-    const vote = { inc_vote: 1 };
+    const vote = { vote: 1 };
     return request(app)
       .patch("/api/articles/1")
       .send(vote)
