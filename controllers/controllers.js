@@ -64,8 +64,8 @@ exports.addComment = (req, res, next) => {
 
 exports.patchVote = (req, res, next) => {
   const { article_id } = req.params;
-  const { inc_vote } = req.body;
-  handleVote(article_id, inc_vote)
+  const { vote } = req.body;
+  handleVote(article_id, vote)
     .then((vote) => res.status(201).send(vote))
     .catch((error) => {
       next(error);
