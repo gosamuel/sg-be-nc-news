@@ -95,7 +95,7 @@ exports.sendUsers = (req, res, next) => {
 exports.sendArticleByTopic = (req, res, next) => {
   const { topic } = req.params;
   getArticlesByTopic(topic)
-    .then((articles) => res.status(200).send(articles))
+    .then((result) => res.status(200).send({ result }))
     .catch((err) => {
       next(err);
     });
