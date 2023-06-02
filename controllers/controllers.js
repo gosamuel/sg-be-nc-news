@@ -43,6 +43,14 @@ exports.sendArticles = (req, res, next) => {
       next(error);
     });
 };
+exports.sendArticleByTopic = (req, res, next) => {
+  const { topic } = req.params;
+  getArticlesByTopic(topic)
+    .then((result) => res.status(200).send({ article: result }))
+    .catch((err) => {
+      next(err);
+    });
+};
 
 exports.sendArticleComments = (req, res, next) => {
   const { article_id } = req.params;
@@ -89,14 +97,5 @@ exports.sendUsers = (req, res, next) => {
     })
     .catch((error) => {
       next(error);
-    });
-};
-
-exports.sendArticleByTopic = (req, res, next) => {
-  const { topic } = req.params;
-  getArticlesByTopic(topic)
-    .then((result) => res.status(200).send({ result }))
-    .catch((err) => {
-      next(err);
     });
 };
