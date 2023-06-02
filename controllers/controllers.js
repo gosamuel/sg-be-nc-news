@@ -8,6 +8,7 @@ const {
   handleVote,
   handleDelete,
   getUsers,
+  getArticlesByTopic,
 } = require("../models/models");
 
 exports.sendTopics = (req, res, next) => {
@@ -84,10 +85,18 @@ exports.deleteComment = (req, res, next) => {
 exports.sendUsers = (req, res, next) => {
   getUsers()
     .then((users) => {
-      console.log(users);
       res.status(200).send({ users });
     })
     .catch((error) => {
       next(error);
+    });
+};
+
+exports.sendArticleByTopic = (req, res, next) => {
+  const { topic } = req.params;
+  getArticlesByTopic(topic)
+    .then((articles) => res.status(200).send(articles))
+    .catch((err) => {
+      next(err);
     });
 };

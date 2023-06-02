@@ -9,6 +9,7 @@ const {
   patchVote,
   deleteComment,
   sendUsers,
+  sendArticleByTopic,
 } = require("./controllers/controllers");
 const cors = require("cors");
 
@@ -25,6 +26,8 @@ app.get("/api/articles/:article_id", sendArticleById);
 app.get("/api/articles", sendArticles);
 
 app.get("/api/articles/:article_id/comments", sendArticleComments);
+
+app.get("/api/articles/:topic", sendArticleByTopic);
 
 app.use(express.json());
 

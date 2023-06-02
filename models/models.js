@@ -71,3 +71,7 @@ exports.getUsers = () => {
     RETURNING *;`
   );
 };
+
+exports.getArticlesByTopic = (topic) => {
+  return db.query(`SELECT * FROM articles WHERE topic = ${topic} RETURNING *;`);
+};
